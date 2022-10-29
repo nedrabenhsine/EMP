@@ -1,0 +1,16 @@
+.la-edit {
+    cursor: pointer;
+    
+}
+
+.la-trash-alt {
+    cursor: pointer;
+
+}
+
+.la-trash-alt:hover {
+    color:  #cb0c9f;
+}
+.la-edit:hover {
+    color:  #cb0c9f;
+}
