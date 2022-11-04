@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Dashboard from './views/Dashboard';
 import WildDays from './views/WildDays';
@@ -9,6 +8,8 @@ import Employers from './views/Employers';
 import Remote from './views/Remote';
 import Permissions from './views/Permissions';
 function App() {
+  console.log("emp");
+
   return (
     <div>
       <Router forceRefresh={true} >
