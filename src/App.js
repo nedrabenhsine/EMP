@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Dashboard from './views/Dashboard';
 import WildDays from './views/WildDays';
 import Login from './views/Login';
@@ -13,14 +12,14 @@ function App() {
   return (
     <div>
       <Router forceRefresh={true} >
-        <Switch>
-          <Route path='/dashboard' component={Dashboard} />
-          <Route path='/wliddays' component={WildDays} />
-          <Route path='/employers' component={Employers} />
-          <Route path='/permissions' component={Permissions} />
-          <Route path='/remote' component={Remote} />
-          <Route path='/' component={Login} />
-        </Switch>
+        <Routes>
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/wliddays' element={<WildDays />} />
+          <Route path='/employers' element={<Employers />} />
+          <Route path='/permissions' element={<Permissions />} />
+          <Route path='/remote' element={<Remote />} />
+          <Route path='/' element={<Login />} />
+        </Routes>
       </Router>
 
     </div>
