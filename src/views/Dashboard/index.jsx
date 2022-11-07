@@ -1,127 +1,125 @@
-import Layout from "../../layouts/Layout"
-import { Row, Col, Calendar, Badge, Table } from 'antd'
-export default () => {
+import Layout from "../../layouts/Layout";
+import { Row, Col, Calendar, Badge, Table } from "antd";
+const Dashboard = () => {
+  const getListData = (value) => {
+    let listData;
 
-    const getListData = (value) => {
-        let listData;
+    switch (value.date()) {
+      case 8:
+        listData = [
+          {
+            type: "warning",
+            content: "This is warning event.",
+          },
+          {
+            type: "success",
+            content: "This is usual event.",
+          },
+        ];
+        break;
 
-        switch (value.date()) {
-            case 8:
-                listData = [
-                    {
-                        type: 'warning',
-                        content: 'This is warning event.',
-                    },
-                    {
-                        type: 'success',
-                        content: 'This is usual event.',
-                    },
-                ];
-                break;
+      case 10:
+        listData = [
+          {
+            type: "warning",
+            content: "This is warning event.",
+          },
+          {
+            type: "success",
+            content: "This is usual event.",
+          },
+          {
+            type: "error",
+            content: "This is error event.",
+          },
+        ];
+        break;
 
-            case 10:
-                listData = [
-                    {
-                        type: 'warning',
-                        content: 'This is warning event.',
-                    },
-                    {
-                        type: 'success',
-                        content: 'This is usual event.',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event.',
-                    },
-                ];
-                break;
+      case 15:
+        listData = [
+          {
+            type: "warning",
+            content: "This is warning event",
+          },
+          {
+            type: "success",
+            content: "This is very long usual event。。....",
+          },
+          {
+            type: "error",
+            content: "This is error event 1.",
+          },
+          {
+            type: "error",
+            content: "This is error event 2.",
+          },
+          {
+            type: "error",
+            content: "This is error event 3.",
+          },
+          {
+            type: "error",
+            content: "This is error event 4.",
+          },
+        ];
+        break;
 
-            case 15:
-                listData = [
-                    {
-                        type: 'warning',
-                        content: 'This is warning event',
-                    },
-                    {
-                        type: 'success',
-                        content: 'This is very long usual event。。....',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event 1.',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event 2.',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event 3.',
-                    },
-                    {
-                        type: 'error',
-                        content: 'This is error event 4.',
-                    },
-                ];
-                break;
+      default:
+    }
 
-            default:
-        }
+    return listData || [];
+  };
 
-        return listData || [];
-    };
+  const getMonthData = (value) => {
+    if (value.month() === 8) {
+      return 1394;
+    }
+  };
 
-    const getMonthData = (value) => {
-        if (value.month() === 8) {
-            return 1394;
-        }
-    };
+  const monthCellRender = (value) => {
+    const num = getMonthData(value);
+    return num ? (
+      <div className="notes-month">
+        <section>{num}</section>
+        <span>Backlog number</span>
+      </div>
+    ) : null;
+  };
 
-    const monthCellRender = (value) => {
-        const num = getMonthData(value);
-        return num ? (
-            <div className="notes-month">
-                <section>{num}</section>
-                <span>Backlog number</span>
-            </div>
-        ) : null;
-    };
-
-    const dateCellRender = (value) => {
-        const listData = getListData(value);
-        return (
-            <ul className="events">
-                {listData.map((item) => (
-                    <li key={item.content}>
-                        <Badge status={item.type} text={item.content} />
-                    </li>
-                ))}
-            </ul>
-        );
-    };
-
-   
-
+  const dateCellRender = (value) => {
+    const listData = getListData(value);
     return (
-        <>
-            <Layout>
-                <div class="container-fluid py-4">
-                    
+      <ul className="events">
+        {listData.map((item) => (
+          <li key={item.content}>
+            <Badge status={item.type} text={item.content} />
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} >
-                            <Calendar style={{ border: '1px solid lightgrey', padding: '10px' }} dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} >
-                            <br />
-                            <br />
-                            <br />
-                           
-
-                        </Col>
-                    </Row>
-                </div>
-            </Layout>
-        </>
-    )
-}
+  return (
+    <>
+      <Layout>
+        <div class="container-fluid py-4">
+          <Row>
+            <Col xs={24} sm={24} md={24} lg={24}>
+              <Calendar
+                style={{ border: "1px solid lightgrey", padding: "10px" }}
+                dateCellRender={dateCellRender}
+                monthCellRender={monthCellRender}
+              />
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24}>
+              <br />
+              <br />
+              <br />
+            </Col>
+          </Row>
+        </div>
+      </Layout>
+    </>
+  );
+};
+export default Dashboard;

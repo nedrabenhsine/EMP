@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Dashboard from './views/Dashboard';
 import WildDays from './views/WildDays';
 import Login from './views/Login';
-import Employers from './views/Employers';
+import Profile from '././views/Profile'
 import Remote from './views/Remote';
 import Permissions from './views/Permissions';
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/wliddays' element={<WildDays />} />
-          <Route path='/employers' element={<Employers />} />
+          <Route path='/Profile' element={<Profile />} />
           <Route path='/permissions' element={<Permissions />} />
           <Route path='/remote' element={<Remote />} />
           <Route path='/' element={<Login />} />

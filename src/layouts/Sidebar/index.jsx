@@ -50,13 +50,13 @@ const Sidebar = () => {
           className="collapse navbar-collapse w-auto max-height-vh-100 h-100"
           id="sidenav-collapse-main"
         >
-          <ul className="navbar-nav">
-            <li className="nav-item">
+          <ul className={"navbar-nav"}>
+            <li className={`nav-item`}>
               <a
                 className={`nav-link  ${
                   pathname === "/dashboard" ? "active" : "text-white"
                 }`}
-                onClicnk={() => navigate("/dashboard")}
+                onClick={() => navigate("/dashboard")}
               >
                 <div className="me-2 d-flex align-items-center justify-content-center">
                   <AiOutlinePieChart size={30} />
@@ -67,9 +67,9 @@ const Sidebar = () => {
             <li className={`nav-item`}>
               <a
                 className={`nav-link  ${
-                  pathname === "/employers" ? "active" : "text-white"
+                  pathname === "/Profile" ? "active" : "text-white"
                 }`}
-                onClick={() => navigate("/employers")}
+                onClick={() => navigate("/Profile")}
               >
                 <div className="me-2 d-flex align-items-center justify-content-center">
                   <BsFileEarmarkPerson size={30} />
@@ -121,20 +121,6 @@ const Sidebar = () => {
                 </span>
               </a>
             </li>
-
-            {/* <li className={`nav-item`}>
-              <a
-                className={`nav-link  ${
-                  pathname === "/remote" ? "active" : ""
-                }`}
-                onClick={() => navigate("/remote")}
-              >
-                <div className=""></div>
-                <span className="nav-link-text ms-1">
-                  Demande de Télé travail
-                </span>
-              </a>
-            </li> */}
           </ul>
         </div>
       </aside>
