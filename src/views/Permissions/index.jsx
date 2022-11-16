@@ -18,12 +18,11 @@ import { BsPlus } from "react-icons/bs";
 import toast, { Toaster } from "react-hot-toast";
 
 const { Option } = Select;
+const userToken = localStorage.getItem("token");
+var decoded = jwt_decode(userToken);
 
 const Permissions = () => {
-  const userToken = localStorage.getItem("token");
-  var decoded = jwt_decode(userToken);
   const [leave, setleave] = useState([]);
-  const [holidaytype, setholidaytype] = useState([]);
   console.log(leave);
   const [data, setData] = useState({
     titel: "",
@@ -34,7 +33,6 @@ const Permissions = () => {
     statut: "à traiter",
     user: decoded.id,
   });
-
   const handleChange = (value) => {
     setData({ ...data, [value.id]: value.value });
   };
@@ -42,7 +40,6 @@ const Permissions = () => {
     axios.get(`http://localhost:5000/permession/list`).then((res) => {
       res.data = res.data.filter((perm) => {
         if (perm.user.username === decoded.username) {
-          console.log("leave", perm);
           return perm;
         }
       });
