@@ -31,15 +31,6 @@ const Profile = () => {
         <div class="container-fluid ">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h3 className="text-uppercase">Profile</h3>
-            <button
-              type="button"
-              className="btn btn-primary p-2"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              ajouter employé
-              <BsPlus size={28} />
-            </button>
           </div>
         </div>
         <div>

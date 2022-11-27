@@ -1,125 +1,130 @@
-import Layout from "../../layouts/Layout";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Row, Col, Calendar, Badge, Table } from "antd";
-const Dashboard = () => {
-  const getListData = (value) => {
-    let listData;
+import Layout from "../../layouts/Layout";
+import FullCalendar, { formatDate } from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import listPlugin from "@fullcalendar/list";
 
-    switch (value.date()) {
-      case 8:
-        listData = [
-          {
-            type: "warning",
-            content: "This is warning event.",
-          },
-          {
-            type: "success",
-            content: "This is usual event.",
-          },
-        ];
-        break;
+const Calender = () => {
+  const [congés, setcongés] = useState([]);
+  const [permession, setpermession] = useState([]);
+  const [remotes, setremotes] = useState([]);
 
-      case 10:
-        listData = [
-          {
-            type: "warning",
-            content: "This is warning event.",
-          },
-          {
-            type: "success",
-            content: "This is usual event.",
-          },
-          {
-            type: "error",
-            content: "This is error event.",
-          },
-        ];
-        break;
-
-      case 15:
-        listData = [
-          {
-            type: "warning",
-            content: "This is warning event",
-          },
-          {
-            type: "success",
-            content: "This is very long usual event。。....",
-          },
-          {
-            type: "error",
-            content: "This is error event 1.",
-          },
-          {
-            type: "error",
-            content: "This is error event 2.",
-          },
-          {
-            type: "error",
-            content: "This is error event 3.",
-          },
-          {
-            type: "error",
-            content: "This is error event 4.",
-          },
-        ];
-        break;
-
-      default:
-    }
-
-    return listData || [];
+  const dumdata = [
+    {
+      id: "2",
+      title: "All-day event 11",
+      start: "2022-11-18",
+      end: "2022-11-19",
+      backgroundcolor: "#clclcl",
+    },
+    {
+      id: "1",
+      title: "Timed event 111",
+      start: "2022-11-21",
+      end: "2022-11-23",
+      backgroundcolor: "#clclcl",
+    },
+  ];
+  const getData = () => {
+    axios.get(`http://localhost:5000/holiday/list`).then((res) => {
+      res.data = res.data.filter((e) => {
+        if (e.statut === "accepté") {
+          return {
+            id: e.id,
+            title: e.holidaytype.name + ", " + e.user.firstname,
+            start: e.start_date,
+            end: e.end_date,
+            backgroundcolor: "#clclcl",
+          };
+        }
+      });
+      res.data = res.data.map((e) => {
+        return {
+          id: e.id,
+          title: e.holidaytype.name + ", " + e.user.firstname,
+          start: e.start_date,
+          end: e.end_date,
+          backgroundcolor: "#clclcl",
+        };
+      });
+      setcongés(res.data);
+    });
+    axios.get(`http://localhost:5000/permession/list`).then((res) => {
+      res.data = res.data.map((e) => {
+        return {
+          titel: e.titel,
+          date: e.date,
+          id: e.id,
+          description: e.description,
+          start_hour: e.start_hour,
+          end_hour: e.end_hour,
+          statut: e.statut,
+          user: e.user.firstname,
+        };
+      });
+      setpermession(res.data);
+    });
+    axios.get(`http://localhost:5000/telework/list`).then((res) => {
+      res.data = res.data.map((e) => {
+        return {
+          titel: e.titel,
+          date: e.date,
+          id: e.id,
+          description: e.description,
+          statut: e.statut,
+          user: e.user.firstname,
+        };
+      });
+      setremotes(res.data);
+    });
   };
-
-  const getMonthData = (value) => {
-    if (value.month() === 8) {
-      return 1394;
-    }
-  };
-
-  const monthCellRender = (value) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
-  };
-
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
-    return (
-      <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
+  // let x = congés.concat(permession);
+  // console.log("x", x);
+  // let y = x.concat(remotes);
+  // console.log("y", y);
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <>
       <Layout>
-        <div class="container-fluid py-4">
-          <Row>
-            <Col xs={24} sm={24} md={24} lg={24}>
-              <Calendar
-                style={{ border: "1px solid lightgrey", padding: "10px" }}
-                dateCellRender={dateCellRender}
-                monthCellRender={monthCellRender}
-              />
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={24}>
-              <br />
-              <br />
-              <br />
-            </Col>
-          </Row>
+        <div className="bg-light me-5 rounded p-5">
+          <div class="container-fluid">
+            <div
+              style={{ display: "flex", "justify-content": "space-between" }}
+            >
+              <h3 className="text-uppercase">Aperçu </h3>
+            </div>
+          </div>
+          <div style={{ padding: "20px" }}>
+            <FullCalendar
+              height="75vh"
+              plugins={[
+                dayGridPlugin,
+                timeGridPlugin,
+                interactionPlugin,
+                // listPlugin,
+              ]}
+              headerToolbar={{
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+              }}
+              initialView="dayGridMonth"
+              editable={true}
+              selectable={true}
+              selectMirror={true}
+              dayMaxEvents={true}
+              events={congés}
+            />
+          </div>
         </div>
       </Layout>
     </>
   );
 };
-export default Dashboard;
+export default Calender;
