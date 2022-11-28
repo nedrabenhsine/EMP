@@ -7,12 +7,15 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
+import jwt_decode from "jwt-decode";
 
 const Calender = () => {
   const [congés, setcongés] = useState([]);
   const [permession, setpermession] = useState([]);
   const [remotes, setremotes] = useState([]);
-
+  const userToken = localStorage.getItem("token");
+  var decoded = jwt_decode(userToken);
+  console.log("dash", decoded);
   const dumdata = [
     {
       id: "2",
@@ -32,7 +35,8 @@ const Calender = () => {
   const getData = () => {
     axios.get(`http://localhost:5000/holiday/list`).then((res) => {
       res.data = res.data.filter((e) => {
-        if (e.statut === "accepté") {
+        console.log("decoded", decoded);
+        if (e.statut === "accepté" && e.user.firstname === decoded.firstname) {
           return {
             id: e.id,
             title: e.holidaytype.name + ", " + e.user.firstname,
